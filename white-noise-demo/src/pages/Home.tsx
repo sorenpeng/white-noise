@@ -3,7 +3,8 @@ import { useRitualRadio } from '../hooks/useRitualRadio';
 import { useAudioEngine } from '../hooks/useAudioEngine';
 import RitualCanvas from '../components/RitualCanvas';
 import BreathingText from '../components/BreathingText';
-import DynamicBackground from '../components/DynamicBackground';
+import ShaderBackground from '../components/ShaderBackground';
+import PulsingCircle from '../components/PulsingCircle';
 import Toast from '../components/Toast';
 
 export default function Home() {
@@ -25,20 +26,7 @@ export default function Home() {
     isInitialized
   } = useAudioEngine();
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // 检测系统暗黑模式
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    setIsDarkMode(mediaQuery.matches);
-    
-    const handleChange = (e: MediaQueryListEvent) => {
-      setIsDarkMode(e.matches);
-    };
-    
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
 
   // 当情绪参数生成时，更新音频参数并开始播放
   useEffect(() => {
@@ -131,14 +119,10 @@ export default function Home() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* 动态背景 */}
-      <DynamicBackground 
-        emotionParams={ritualState.emotionParams}
-        isPlaying={ritualState.currentState === 'playing'}
-        isDarkMode={isDarkMode}
-      />
-      
+    <ShaderBackground 
+      emotionParams={ritualState.emotionParams}
+      isPlaying={ritualState.currentState === 'playing'}
+    >
       {/* 主要内容区域 */}
       <div className="relative z-10 w-full h-full">
         {renderContent()}
@@ -156,6 +140,12 @@ export default function Home() {
         )}
       </div>
       
+      {/* Pulsing Circle */}
+      <PulsingCircle 
+        emotionParams={ritualState.emotionParams}
+        isPlaying={ritualState.currentState === 'playing'}
+      />
+      
       {/* Toast提示 */}
       <Toast
         message={ritualState.toastMessage}
@@ -163,6 +153,6 @@ export default function Home() {
         onHide={hideToast}
         type="info"
       />
-    </div>
+    </ShaderBackground>
   );
 }
