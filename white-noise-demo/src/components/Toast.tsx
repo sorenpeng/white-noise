@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import animationStyles from './Toast.module.css';
 
 interface ToastProps {
   message: string;
@@ -50,13 +51,13 @@ const Toast: React.FC<ToastProps> = ({
     }
   };
 
-  const styles = getTypeStyles();
+  const typeStyles = getTypeStyles();
 
   return (
-    <div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 animate-fade-in">
+    <div className={`fixed top-8 left-1/2 transform -translate-x-1/2 z-50 ${animationStyles['animate-fade-in']}`}>
       <div 
         className={`
-          ${styles.bg} ${styles.text} ${styles.border}
+          ${typeStyles.bg} ${typeStyles.text} ${typeStyles.border}
           px-6 py-3 rounded-full border backdrop-blur-sm
           shadow-lg shadow-black/20
           text-sm font-medium
@@ -69,32 +70,6 @@ const Toast: React.FC<ToastProps> = ({
       >
         {message}
       </div>
-      
-      <style jsx>{`
-        @keyframes slideInFromTop {
-          from {
-            opacity: 0;
-            transform: translateY(-20px) translateX(-50%);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) translateX(-50%);
-          }
-        }
-        
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 0.3s ease-out;
-        }
-      `}</style>
     </div>
   );
 };

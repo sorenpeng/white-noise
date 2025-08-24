@@ -63,7 +63,6 @@ export default function PulsingCircle({ emotionParams, isPlaying }: PulsingCircl
           thickness={0.1}
           softness={0.2}
           intensity={getIntensity()}
-          spotsPerColor={5}
           spotSize={0.1}
           pulse={0.1}
           smoke={0.5}

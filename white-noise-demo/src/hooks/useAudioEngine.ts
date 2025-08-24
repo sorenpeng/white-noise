@@ -1,10 +1,10 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import * as Tone from 'tone';
-import { AudioEngineState, AudioVisualizationData } from '../types/audio';
+import { AudioEngineState, AudioParameters, AudioVisualizationData } from '../types/audio';
 import { EmotionParameters } from '../types/ritualRadio';
 import { parameterMapping, debounce } from '../utils/audioMapping';
 
-const initialParameters = {
+const initialParameters: AudioParameters = {
   energy: 50,
   brightness: 50,
   speed: 50,
@@ -66,7 +66,11 @@ export const useAudioEngine = () => {
       analyserRef.current = analyser;
       
       // 应用初始参数
-      updateAudioParameters(initialParameters);
+      updateAudioParameters({
+        energy: initialParameters.energy,
+        brightness: initialParameters.brightness,
+        tempo: initialParameters.speed,
+      });
       
       setIsInitialized(true);
     } catch (error) {
@@ -78,10 +82,10 @@ export const useAudioEngine = () => {
   const updateAudioParameters = useCallback((emotionParams: EmotionParameters) => {
     if (!isInitialized) return;
     
-    const audioParams = {
-      energy: Math.round(emotionParams.energy * 100),
-      brightness: Math.round(emotionParams.brightness * 100),
-      speed: Math.round(emotionParams.tempo * 100),
+    const audioParams: AudioParameters = {
+      energy: emotionParams.energy,
+      brightness: emotionParams.brightness,
+      speed: emotionParams.tempo,
     };
     
     try {

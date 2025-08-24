@@ -101,15 +101,12 @@ export default function ShaderBackground({ children, emotionParams, isPlaying }:
         className="absolute inset-0 w-full h-full"
         colors={getColors()}
         speed={getSpeed()}
-        backgroundColor="#000000"
         style={{ pointerEvents: 'none' }}
       />
       <MeshGradient
         className="absolute inset-0 w-full h-full"
         colors={["#000000", "#ffffff", ...getColors().slice(1, 3), "#000000"]}
         speed={getSpeed() * 0.7}
-        wireframe="true"
-        backgroundColor="transparent"
         style={{ pointerEvents: 'none', opacity: getOpacity() }}
       />
 

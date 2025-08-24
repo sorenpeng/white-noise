@@ -37,7 +37,7 @@ export default function Home() {
       updateParameters({
         energy,
         brightness,
-        speed: tempo
+        tempo
       });
       
       // 如果音频未初始化或未播放，则开始播放

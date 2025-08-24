@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { EmotionParameters } from '../types/ritualRadio';
+import styles from './DynamicBackground.module.css';
 
 interface DynamicBackgroundProps {
   emotionParams: EmotionParameters | null;
@@ -58,7 +59,7 @@ const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
       style={{
         background: `linear-gradient(${gradientAngle}deg, ${color1}, ${color2}, ${color3})`,
         backgroundSize: '400% 400%',
-        animation: isPlaying ? 'gradientShift 16s ease-in-out infinite' : 'none'
+        animation: isPlaying ? `${styles.gradientShift} 16s ease-in-out infinite` : 'none'
       }}
     >
       {/* 添加一些纹理层 */}
@@ -95,17 +96,6 @@ const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
           />
         </>
       )}
-      
-      <style jsx>{`
-        @keyframes gradientShift {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-      `}</style>
     </div>
   );
 };
