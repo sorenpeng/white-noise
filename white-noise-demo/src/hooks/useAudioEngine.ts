@@ -1,9 +1,10 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import * as Tone from 'tone';
-import { AudioEngineState, AudioParameters, AudioVisualizationData } from '../types/audio';
+import { AudioEngineState, AudioVisualizationData } from '../types/audio';
+import { EmotionParameters } from '../types/ritualRadio';
 import { parameterMapping, debounce } from '../utils/audioMapping';
 
-const initialParameters: AudioParameters = {
+const initialParameters = {
   energy: 50,
   brightness: 50,
   speed: 50,
@@ -73,42 +74,54 @@ export const useAudioEngine = () => {
     }
   }, []);
 
-  // 更新音频参数
-  const updateAudioParameters = useCallback((params: AudioParameters) => {
+  // 更新音频参数 - 支持情绪参数
+  const updateAudioParameters = useCallback((emotionParams: EmotionParameters) => {
     if (!isInitialized) return;
+    
+    const audioParams = {
+      energy: Math.round(emotionParams.energy * 100),
+      brightness: Math.round(emotionParams.brightness * 100),
+      speed: Math.round(emotionParams.tempo * 100),
+    };
     
     try {
       // Energy 参数映射
       if (masterGainRef.current) {
-        const gainValue = parameterMapping.energy.masterGain(params.energy);
-        masterGainRef.current.gain.rampTo(gainValue, 0.1);
+        const gainValue = parameterMapping.energy.masterGain(audioParams.energy);
+        masterGainRef.current.gain.rampTo(gainValue, 0.2);
       }
       
       if (reverbRef.current) {
-        const wetValue = parameterMapping.energy.reverbWet(params.energy);
-        reverbRef.current.wet.rampTo(wetValue, 0.1);
+        const wetValue = parameterMapping.energy.reverbWet(audioParams.energy);
+        reverbRef.current.wet.rampTo(wetValue, 0.2);
       }
       
       // Brightness 参数映射
       if (filterRef.current) {
-        const freqValue = parameterMapping.brightness.filterFrequency(params.brightness);
-        filterRef.current.frequency.rampTo(freqValue, 0.1);
+        const freqValue = parameterMapping.brightness.filterFrequency(audioParams.brightness);
+        filterRef.current.frequency.rampTo(freqValue, 0.2);
       }
       
       if (reverbRef.current) {
-        const preDelayValue = parameterMapping.brightness.reverbPreDelay(params.brightness);
+        const preDelayValue = parameterMapping.brightness.reverbPreDelay(audioParams.brightness);
         reverbRef.current.preDelay = preDelayValue;
       }
       
       // Speed 参数映射
-      const bpmValue = parameterMapping.speed.transportBpm(params.speed);
-      Tone.Transport.bpm.rampTo(bpmValue, 0.1);
+      const bpmValue = parameterMapping.speed.transportBpm(audioParams.speed);
+      Tone.Transport.bpm.rampTo(bpmValue, 0.2);
       
       // 根据速度调整振荡器频率
       if (oscillatorRef.current) {
-        const oscFreq = 220 + (params.speed - 50) * 2;
-        oscillatorRef.current.frequency.rampTo(oscFreq, 0.1);
+        const oscFreq = 220 + (audioParams.speed - 50) * 2;
+        oscillatorRef.current.frequency.rampTo(oscFreq, 0.2);
       }
+      
+      // 更新状态
+      setState(prev => ({
+        ...prev,
+        parameters: audioParams
+      }));
       
     } catch (error) {
       console.error('更新音频参数失败:', error);
@@ -117,20 +130,13 @@ export const useAudioEngine = () => {
 
   // 防抖的参数更新函数
   const debouncedUpdateParameters = useCallback(
-    debounce(updateAudioParameters, 50),
+    debounce(updateAudioParameters, 100),
     [updateAudioParameters]
   );
 
   // 更新参数状态和音频
-  const updateParameters = useCallback((newParams: Partial<AudioParameters>) => {
-    setState(prev => {
-      const updatedParams = { ...prev.parameters, ...newParams };
-      debouncedUpdateParameters(updatedParams);
-      return {
-        ...prev,
-        parameters: updatedParams,
-      };
-    });
+  const updateParameters = useCallback((emotionParams: EmotionParameters) => {
+    debouncedUpdateParameters(emotionParams);
   }, [debouncedUpdateParameters]);
 
   // 切换播放状态
@@ -219,6 +225,7 @@ export const useAudioEngine = () => {
   return {
     state,
     updateParameters,
+    updateAudioParameters,
     togglePlayback,
     setVolume,
     getAnalyserData,

@@ -1,25 +1,28 @@
 import { ParameterMapping } from '../types/audio';
 
 /**
- * 音频参数映射配置
- * 根据技术架构文档中定义的映射关系
+ * Ritual Radio 音频参数映射配置
+ * 根据交互方案中定义的映射关系
  */
 export const parameterMapping: ParameterMapping = {
   energy: {
-    // Energy (0-100) -> master.gain (0-1)
-    masterGain: (value: number) => value / 100,
-    // Energy (0-100) -> reverb.wet (0.1-0.6)
-    reverbWet: (value: number) => value / 200 + 0.1,
+    // Energy (0-100) -> master.gain (0.3-0.8)
+    // 低能量=温柔近耳，高能量=空间感拉满
+    masterGain: (value: number) => 0.3 + (value / 100) * 0.5,
+    // Energy (0-100) -> reverb.wet (0.3-0.8)
+    reverbWet: (value: number) => 0.3 + (value / 100) * 0.5,
   },
   brightness: {
-    // Brightness (0-100) -> filter.frequency (200-5200 Hz)
-    filterFrequency: (value: number) => 200 + value * 50,
-    // Brightness (0-100) -> reverb.preDelay (0-0.1 seconds)
-    reverbPreDelay: (value: number) => value / 1000,
+    // Brightness (0-100) -> Low-pass Cutoff (300Hz-4kHz)
+    // 暗=朦胧低频，亮=晶莹高频
+    filterFrequency: (value: number) => 300 + (value / 100) * 3700,
+    // Brightness (0-100) -> reverb.preDelay (0-0.05 seconds)
+    reverbPreDelay: (value: number) => (value / 100) * 0.05,
   },
   speed: {
-    // Speed (0-100) -> Transport.bpm (60-180 BPM)
-    transportBpm: (value: number) => 60 + value * 1.2,
+    // Speed/Tempo (0-100) -> Transport.bpm (50-110 BPM)
+    // 呼吸慢→快，文字动画同步
+    transportBpm: (value: number) => 50 + (value / 100) * 60,
   },
 };
 
