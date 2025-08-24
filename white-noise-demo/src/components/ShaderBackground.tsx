@@ -39,20 +39,21 @@ export default function ShaderBackground({ children, emotionParams, isPlaying }:
   // 根据情绪参数动态调整颜色和速度
   const getColors = () => {
     if (!emotionParams) {
-      return ["#000000", "#8b5cf6", "#ffffff", "#1e1b4b", "#4c1d95"]
+      // 默认调色板：白色、红色、橙色的活力搭配
+      return ["#FFFFFF", "#FF4500", "#FFA500", "#FF6347", "#FFD700"]
     }
 
     const { energy, brightness } = emotionParams
     
     if (energy > 70) {
-      // 高能量：红色、橙色系
-      return ["#000000", "#ff4c3e", "#ff6b35", "#ffd700", "#ff8c00"]
+      // 高能量：更强烈的红色、橙色系
+      return ["#FFFFFF", "#FF0000", "#FF4500", "#DC143C", "#FF8C00"]
     } else if (energy > 40) {
-      // 中等能量：紫色、蓝色系
-      return ["#000000", "#8b5cf6", "#ffffff", "#1e1b4b", "#4c1d95"]
+      // 中等能量：温和的白色、红色、橙色系
+      return ["#FFFFFF", "#FF6347", "#FFA500", "#FF7F50", "#FFD700"]
     } else {
-      // 低能量：蓝色、绿色系
-      return ["#000000", "#00ff88", "#beecff", "#1e3a8a", "#065f46"]
+      // 低能量：柔和的白色、浅红色、浅橙色系
+      return ["#FFFFFF", "#FFB6C1", "#FFDAB9", "#FFA07A", "#FFFFE0"]
     }
   }
 
