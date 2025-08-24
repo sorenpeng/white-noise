@@ -123,12 +123,9 @@ export default function Home() {
       emotionParams={ritualState.emotionParams}
       isPlaying={ritualState.currentState === 'playing'}
     >
-      {/* 主要内容区域 */}
-      <div className="relative z-10 w-full h-full">
-        {renderContent()}
-        
-        {/* Canvas绘制层 - 只在idle和drawing状态显示 */}
-        {(ritualState.currentState === 'idle' || ritualState.currentState === 'drawing') && (
+      {/* Canvas绘制层 - z-index介于背景和前景UI之间 */}
+      {(ritualState.currentState === 'idle' || ritualState.currentState === 'drawing') && (
+        <div className="absolute inset-0 z-10">
           <RitualCanvas
             isDrawing={ritualState.currentState === 'drawing'}
             onStartDrawing={startDrawing}
@@ -137,22 +134,31 @@ export default function Home() {
             currentTrajectory={currentTrajectory}
             brightness={ritualState.emotionParams?.brightness || 50}
           />
-        )}
+        </div>
+      )}
+      
+      {/* 主要内容区域，包含状态文本等 */}
+      <div className="relative z-20 w-full h-full">
+        {renderContent()}
       </div>
       
-      {/* Pulsing Circle */}
-      <PulsingCircle 
-        emotionParams={ritualState.emotionParams}
-        isPlaying={ritualState.currentState === 'playing'}
-      />
+      {/* 其他顶层UI，如脉冲圆圈 */}
+      <div className="absolute bottom-8 right-8 z-30">
+        <PulsingCircle 
+          emotionParams={ritualState.emotionParams}
+          isPlaying={ritualState.currentState === 'playing'}
+        />
+      </div>
       
       {/* Toast提示 */}
-      <Toast
-        message={ritualState.toastMessage}
-        show={ritualState.showToast}
-        onHide={hideToast}
-        type="info"
-      />
+      <div className="relative z-40">
+        <Toast
+          message={ritualState.toastMessage}
+          show={ritualState.showToast}
+          onHide={hideToast}
+          type="info"
+        />
+      </div>
     </ShaderBackground>
   );
 }

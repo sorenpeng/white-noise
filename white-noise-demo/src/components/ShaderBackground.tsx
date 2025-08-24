@@ -102,6 +102,7 @@ export default function ShaderBackground({ children, emotionParams, isPlaying }:
         colors={getColors()}
         speed={getSpeed()}
         backgroundColor="#000000"
+        style={{ pointerEvents: 'none' }}
       />
       <MeshGradient
         className="absolute inset-0 w-full h-full"
@@ -109,7 +110,7 @@ export default function ShaderBackground({ children, emotionParams, isPlaying }:
         speed={getSpeed() * 0.7}
         wireframe="true"
         backgroundColor="transparent"
-        style={{ opacity: getOpacity() }}
+        style={{ pointerEvents: 'none', opacity: getOpacity() }}
       />
 
       {children}
