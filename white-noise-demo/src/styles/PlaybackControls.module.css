@@ -94,7 +94,8 @@
 }
 
 @keyframes wave {
-  0%, 100% {
+  0%,
+  100% {
     height: 4px;
     opacity: 0.4;
   }
@@ -243,27 +244,27 @@
     padding: 1.5rem;
     gap: 1.5rem;
   }
-  
+
   .mainControls {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
   }
-  
+
   .playButton {
     width: 70px;
     height: 70px;
   }
-  
+
   .volumeControl {
     flex-direction: column;
     gap: 0.75rem;
   }
-  
+
   .volumeSliderContainer {
     width: 100%;
   }
-  
+
   .audioInfo {
     grid-template-columns: 1fr;
   }
@@ -273,16 +274,16 @@
   .playbackControls {
     padding: 1rem;
   }
-  
+
   .playButton {
     width: 60px;
     height: 60px;
   }
-  
+
   .statusLabel {
     font-size: 1.1rem;
   }
-  
+
   .statusDetail {
     font-size: 0.8rem;
   }
@@ -293,15 +294,15 @@
   .playbackControls {
     border-width: 2px;
   }
-  
+
   .volumeControl {
     border-width: 2px;
   }
-  
+
   .audioInfo {
     border-width: 2px;
   }
-  
+
   .infoItem {
     border-width: 2px;
   }
@@ -312,11 +313,11 @@
   .playButton {
     transition: none;
   }
-  
+
   .wave {
     animation: none;
   }
-  
+
   .volumeProgress {
     transition: none;
   }

@@ -12,7 +12,7 @@
 }
 
 .controlPanel::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -144,7 +144,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -171,25 +172,25 @@
   .controlPanel {
     padding: 1.5rem;
   }
-  
+
   .header {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
   }
-  
+
   .title {
     font-size: 1.25rem;
   }
-  
+
   .parametersGrid {
     gap: 1.5rem;
   }
-  
+
   .parameterSection {
     padding: 1rem;
   }
-  
+
   .parameterIcon {
     width: 40px;
     height: 40px;
@@ -202,22 +203,22 @@
     padding: 1rem;
     margin: 0.5rem;
   }
-  
+
   .resetButton {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
   }
-  
+
   .parameterSection {
     padding: 0.75rem;
   }
-  
+
   .parameterIcon {
     width: 36px;
     height: 36px;
     top: -8px;
   }
-  
+
   .parameterDescription {
     font-size: 0.8rem;
   }
@@ -228,7 +229,7 @@
   .controlPanel {
     box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
   }
-  
+
   .parameterSection {
     background: rgba(15, 23, 42, 0.8);
   }
@@ -239,11 +240,11 @@
   .controlPanel {
     border-width: 2px;
   }
-  
+
   .parameterSection {
     border-width: 2px;
   }
-  
+
   .resetButton {
     border-width: 2px;
   }

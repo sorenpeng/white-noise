@@ -154,6 +154,8 @@ Thumbs.db
 build/
 dist/
 lib/
+!white-noise-demo/src/lib/
+!white-noise-demo/src/lib/**
 
 # Logs
 logs

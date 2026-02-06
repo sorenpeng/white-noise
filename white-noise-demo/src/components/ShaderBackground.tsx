@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import type React from "react"
-import { useEffect, useRef, useState } from "react"
-import { MeshGradient } from "@paper-design/shaders-react"
+import { MeshGradient } from '@paper-design/shaders-react'
+import type React from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface ShaderBackgroundProps {
   children: React.ReactNode
@@ -14,7 +14,11 @@ interface ShaderBackgroundProps {
   isPlaying?: boolean
 }
 
-export default function ShaderBackground({ children, emotionParams, isPlaying }: ShaderBackgroundProps) {
+export default function ShaderBackground({
+  children,
+  emotionParams,
+  isPlaying,
+}: ShaderBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isActive, setIsActive] = useState(false)
 
@@ -24,14 +28,14 @@ export default function ShaderBackground({ children, emotionParams, isPlaying }:
 
     const container = containerRef.current
     if (container) {
-      container.addEventListener("mouseenter", handleMouseEnter)
-      container.addEventListener("mouseleave", handleMouseLeave)
+      container.addEventListener('mouseenter', handleMouseEnter)
+      container.addEventListener('mouseleave', handleMouseLeave)
     }
 
     return () => {
       if (container) {
-        container.removeEventListener("mouseenter", handleMouseEnter)
-        container.removeEventListener("mouseleave", handleMouseLeave)
+        container.removeEventListener('mouseenter', handleMouseEnter)
+        container.removeEventListener('mouseleave', handleMouseLeave)
       }
     }
   }, [])
@@ -40,20 +44,20 @@ export default function ShaderBackground({ children, emotionParams, isPlaying }:
   const getColors = () => {
     if (!emotionParams) {
       // 默认调色板：白色、红色、橙色的活力搭配
-      return ["#FFFFFF", "#FF4500", "#FFA500", "#FF6347", "#FFD700"]
+      return ['#FFFFFF', '#FF4500', '#FFA500', '#FF6347', '#FFD700']
     }
 
     const { energy, brightness } = emotionParams
-    
+
     if (energy > 70) {
       // 高能量：更强烈的红色、橙色系
-      return ["#FFFFFF", "#FF0000", "#FF4500", "#DC143C", "#FF8C00"]
+      return ['#FFFFFF', '#FF0000', '#FF4500', '#DC143C', '#FF8C00']
     } else if (energy > 40) {
       // 中等能量：温和的白色、红色、橙色系
-      return ["#FFFFFF", "#FF6347", "#FFA500", "#FF7F50", "#FFD700"]
+      return ['#FFFFFF', '#FF6347', '#FFA500', '#FF7F50', '#FFD700']
     } else {
       // 低能量：柔和的白色、浅红色、浅橙色系
-      return ["#FFFFFF", "#FFB6C1", "#FFDAB9", "#FFA07A", "#FFFFE0"]
+      return ['#FFFFFF', '#FFB6C1', '#FFDAB9', '#FFA07A', '#FFFFE0']
     }
   }
 
@@ -106,7 +110,7 @@ export default function ShaderBackground({ children, emotionParams, isPlaying }:
       />
       <MeshGradient
         className="absolute inset-0 w-full h-full"
-        colors={["#000000", "#ffffff", ...getColors().slice(1, 3), "#000000"]}
+        colors={['#000000', '#ffffff', ...getColors().slice(1, 3), '#000000']}
         speed={getSpeed() * 0.7}
         style={{ pointerEvents: 'none', opacity: getOpacity() }}
       />

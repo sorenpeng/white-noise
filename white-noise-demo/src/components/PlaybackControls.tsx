@@ -1,12 +1,12 @@
-import React from 'react';
-import { AudioEngineState } from '../types/audio';
-import styles from '../styles/PlaybackControls.module.css';
+import type React from 'react'
+import styles from '../styles/PlaybackControls.module.css'
+import type { AudioEngineState } from '../types/audio'
 
 interface PlaybackControlsProps {
-  state: AudioEngineState;
-  onTogglePlayback: () => void;
-  onVolumeChange: (volume: number) => void;
-  isInitialized: boolean;
+  state: AudioEngineState
+  onTogglePlayback: () => void
+  onVolumeChange: (volume: number) => void
+  isInitialized: boolean
 }
 
 const PlaybackControls: React.FC<PlaybackControlsProps> = ({
@@ -16,11 +16,11 @@ const PlaybackControls: React.FC<PlaybackControlsProps> = ({
   isInitialized,
 }) => {
   const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const volume = parseFloat(event.target.value);
-    onVolumeChange(volume);
-  };
+    const volume = Number.parseFloat(event.target.value)
+    onVolumeChange(volume)
+  }
 
-  const volumePercentage = Math.round(state.volume * 100);
+  const volumePercentage = Math.round(state.volume * 100)
 
   return (
     <div className={styles.playbackControls}>
@@ -46,7 +46,7 @@ const PlaybackControls: React.FC<PlaybackControlsProps> = ({
               </svg>
             )}
           </div>
-          
+
           {/* 播放状态指示器 */}
           {state.isPlaying && (
             <div className={styles.playingIndicator}>
@@ -56,25 +56,31 @@ const PlaybackControls: React.FC<PlaybackControlsProps> = ({
             </div>
           )}
         </button>
-        
+
         {/* 状态文本 */}
         <div className={styles.statusText}>
           <span className={styles.statusLabel}>
-            {!isInitialized && !state.isPlaying ? '点击开始' : 
-             state.isPlaying ? '正在播放' : '已暂停'}
+            {!isInitialized && !state.isPlaying
+              ? '点击开始'
+              : state.isPlaying
+                ? '正在播放'
+                : '已暂停'}
           </span>
-          {isInitialized && (
-            <span className={styles.statusDetail}>
-              白噪音生成器
-            </span>
-          )}
+          {isInitialized && <span className={styles.statusDetail}>白噪音生成器</span>}
         </div>
       </div>
-      
+
       {/* 音量控制 */}
       <div className={styles.volumeControl}>
         <div className={styles.volumeIcon}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             {state.volume === 0 ? (
               // 静音图标
               <>
@@ -98,7 +104,7 @@ const PlaybackControls: React.FC<PlaybackControlsProps> = ({
             )}
           </svg>
         </div>
-        
+
         <div className={styles.volumeSliderContainer}>
           <input
             type="range"
@@ -109,20 +115,17 @@ const PlaybackControls: React.FC<PlaybackControlsProps> = ({
             onChange={handleVolumeChange}
             className={styles.volumeSlider}
             style={{
-              background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${volumePercentage}%, #334155 ${volumePercentage}%, #334155 100%)`
+              background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${volumePercentage}%, #334155 ${volumePercentage}%, #334155 100%)`,
             }}
           />
           <div className={styles.volumeTrack}>
-            <div 
-              className={styles.volumeProgress}
-              style={{ width: `${volumePercentage}%` }}
-            />
+            <div className={styles.volumeProgress} style={{ width: `${volumePercentage}%` }} />
           </div>
         </div>
-        
+
         <span className={styles.volumeValue}>{volumePercentage}%</span>
       </div>
-      
+
       {/* 音频信息 */}
       <div className={styles.audioInfo}>
         <div className={styles.infoItem}>
@@ -139,7 +142,7 @@ const PlaybackControls: React.FC<PlaybackControlsProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PlaybackControls;
+export default PlaybackControls

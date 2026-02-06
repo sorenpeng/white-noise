@@ -1,6 +1,6 @@
-import React from 'react';
-import { SliderProps } from '../types/audio';
-import styles from '../styles/ParameterSlider.module.css';
+import type React from 'react'
+import styles from '../styles/ParameterSlider.module.css'
+import type { SliderProps } from '../types/audio'
 
 const ParameterSlider: React.FC<SliderProps> = ({
   label,
@@ -11,11 +11,11 @@ const ParameterSlider: React.FC<SliderProps> = ({
   className = '',
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseFloat(event.target.value);
-    onChange(newValue);
-  };
+    const newValue = Number.parseFloat(event.target.value)
+    onChange(newValue)
+  }
 
-  const percentage = ((value - min) / (max - min)) * 100;
+  const percentage = ((value - min) / (max - min)) * 100
 
   return (
     <div className={`${styles.sliderContainer} ${className}`}>
@@ -23,7 +23,7 @@ const ParameterSlider: React.FC<SliderProps> = ({
         <label className={styles.label}>{label}</label>
         <span className={styles.value}>{Math.round(value)}</span>
       </div>
-      
+
       <div className={styles.sliderWrapper}>
         <input
           type="range"
@@ -33,25 +33,19 @@ const ParameterSlider: React.FC<SliderProps> = ({
           onChange={handleChange}
           className={styles.slider}
           style={{
-            background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${percentage}%, #1e293b ${percentage}%, #1e293b 100%)`
+            background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${percentage}%, #1e293b ${percentage}%, #1e293b 100%)`,
           }}
         />
-        
+
         {/* 自定义滑块轨道 */}
         <div className={styles.track}>
-          <div 
-            className={styles.progress}
-            style={{ width: `${percentage}%` }}
-          />
+          <div className={styles.progress} style={{ width: `${percentage}%` }} />
         </div>
-        
+
         {/* 自定义滑块按钮 */}
-        <div 
-          className={styles.thumb}
-          style={{ left: `calc(${percentage}% - 12px)` }}
-        />
+        <div className={styles.thumb} style={{ left: `calc(${percentage}% - 12px)` }} />
       </div>
-      
+
       {/* 刻度标记 */}
       <div className={styles.ticks}>
         <span className={styles.tick}>0</span>
@@ -61,7 +55,7 @@ const ParameterSlider: React.FC<SliderProps> = ({
         <span className={styles.tick}>100</span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ParameterSlider;
+export default ParameterSlider

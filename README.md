@@ -18,7 +18,7 @@ This "one-stroke emotion" concept was the guiding principle behind all subsequen
 
 ## The Technical Blueprint: A 3-Hour Action Plan
 
-With a clear concept in mind, the next step was to create a technical plan that could be executed within the tight timeframe of the hackathon. The plan, detailed in `plan.md`, outlined the key technologies and a phased approach to development:
+With a clear concept in mind, the next step was to create a technical plan that could be executed within the tight timeframe of the hackathon. The plan, detailed in `docs/plan.md`, outlined the key technologies and a phased approach to development:
 
 *   **Audio Core:** We chose **Tone.js**, a powerful Web Audio framework, to build the audio engine. This allowed for the rapid creation of a signal chain that included oscillators, noise synthesizers, filters, and reverb.
 *   **Visuals and Animation:** For the visual component, we decided to use **variable fonts** (Roboto Flex) to create a "breathing" text effect that would synchronize with the audio. The background would be a dynamic gradient generated based on the user's input.
@@ -28,7 +28,7 @@ The development process was broken down into a tight schedule, with specific tim
 
 ## Building the Audio Engine: The Heart of the Experience
 
-The core of "Ritual Radio" is its ability to translate a user's drawing into a unique soundscape. This was achieved through a parameterized audio engine, as described in `core-audio-logic.md`. The engine is built around three key parameters:
+The core of "Ritual Radio" is its ability to translate a user's drawing into a unique soundscape. This was achieved through a parameterized audio engine, as described in `docs/core-audio-logic.md`. The engine is built around three key parameters:
 
 *   **Energy:** This parameter, derived from the vertical displacement of the user's drawing, controls the overall volume and the "wetness" of the reverb, creating a sense of space and fullness.
 *   **Brightness:** Determined by the speed of the user's drawing, this parameter controls a low-pass filter, making the sound brighter and crisper or warmer and more muffled.
